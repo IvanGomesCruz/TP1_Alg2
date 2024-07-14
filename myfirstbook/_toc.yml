@@ -5,6 +5,4 @@ format: jb-book
 root: intro
 chapters:
 - file: TP1_Ag2.ipynb
-- file: markdown
-- file: notebooks
-- file: markdown-notebooks
+
