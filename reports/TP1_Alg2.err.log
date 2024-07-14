@@ -51,7 +51,6 @@ for file in file_names:
     t_f = time.time()
     t.append(t_f - t_i)
     num_v.append(len(poly.vertex_list))
-print(len(num_v))
 plt.scatter(num_v, t)
 
 plt.title('Relação entre Tempo e Número de Vértices')
