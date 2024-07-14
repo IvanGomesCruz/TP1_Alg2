@@ -22,43 +22,57 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-input = 'agp2009a-simplerand/randsimple-20-1.pol'
-poly = Polygon(input)
-result = triangulate(poly)
-fig = poly.plot(result)
-fig.show()
+import os
+import time
+import matplotlib.pyplot as plt
 
-colors = three_color(result)
-print_colors(poly,result)
-print(f"Número de cameras: {min(colors.values())}")
+def files_name(folder):
+    file_names = []
+    for file_name in os.listdir(folder):
+        full_path = os.path.join(folder, file_name)
+        if os.path.isfile(full_path):
+            file_names.append(file_name)
+    return file_names
+
+
+
+folder = 'agp2009a-simplerand'
+file_names = files_name(folder)
+
+t = []
+num_v = []
+
+
+for file in file_names:
+    input = f"{folder}/{file}"
+    poly = Polygon(input)
+    t_i = time.time()
+    result = triangulate(poly)
+    t_f = time.time()
+    t.append(t_f - t_i)
+    num_v.append(len(poly.vertex_list))
+print(len(num_v))
+plt.scatter(num_v, t)
+
+plt.title('Relação entre Tempo e Número de Vértices')
+plt.xlabel('Número de Vértices')
+plt.ylabel('Tempo (s)')
+
+plt.show()
+
 
 
 ------------------
 
 
 [1;31m---------------------------------------------------------------------------[0m
-[1;31mFileNotFoundError[0m                         Traceback (most recent call last)
-Cell [1;32mIn[8], line 2[0m
-[0;32m      1[0m [38;5;28minput[39m [38;5;241m=[39m [38;5;124m'[39m[38;5;124magp2009a-simplerand/randsimple-20-1.pol[39m[38;5;124m'[39m
-[1;32m----> 2[0m poly [38;5;241m=[39m [43mPolygon[49m[43m([49m[38;5;28;43minput[39;49m[43m)[49m
-[0;32m      3[0m result [38;5;241m=[39m triangulate(poly)
-[0;32m      4[0m fig [38;5;241m=[39m poly[38;5;241m.[39mplot(result)
+[1;31mModuleNotFoundError[0m                       Traceback (most recent call last)
+Cell [1;32mIn[9], line 3[0m
+[0;32m      1[0m [38;5;28;01mimport[39;00m [38;5;21;01mos[39;00m
+[0;32m      2[0m [38;5;28;01mimport[39;00m [38;5;21;01mtime[39;00m
+[1;32m----> 3[0m [38;5;28;01mimport[39;00m [38;5;21;01mmatplotlib[39;00m[38;5;21;01m.[39;00m[38;5;21;01mpyplot[39;00m [38;5;28;01mas[39;00m [38;5;21;01mplt[39;00m
+[0;32m      5[0m [38;5;28;01mdef[39;00m [38;5;21mfiles_name[39m(folder):
+[0;32m      6[0m     file_names [38;5;241m=[39m []
 
-Cell [1;32mIn[3], line 6[0m, in [0;36mPolygon.__init__[1;34m(self, filename)[0m
-[0;32m      4[0m [38;5;28mself[39m[38;5;241m.[39my_coords [38;5;241m=[39m []
-[0;32m      5[0m [38;5;28mself[39m[38;5;241m.[39mvertex_list [38;5;241m=[39m []
-[1;32m----> 6[0m [38;5;28;01mwith[39;00m [38;5;28;43mopen[39;49m[43m([49m[43mfilename[49m[43m,[49m[43m [49m[38;5;124;43m'[39;49m[38;5;124;43mr[39;49m[38;5;124;43m'[39;49m[43m)[49m [38;5;28;01mas[39;00m file:
-[0;32m      7[0m     [38;5;28;01mfor[39;00m line [38;5;129;01min[39;00m file:
-[0;32m      8[0m         parts [38;5;241m=[39m line[38;5;241m.[39mstrip()[38;5;241m.[39msplit()
-
-File [1;32m~\AppData\Local\pypoetry\Cache\virtualenvs\tp1-alg2-A0e5TZdT-py3.11\Lib\site-packages\IPython\core\interactiveshell.py:324[0m, in [0;36m_modified_open[1;34m(file, *args, **kwargs)[0m
-[0;32m    317[0m [38;5;28;01mif[39;00m file [38;5;129;01min[39;00m {[38;5;241m0[39m, [38;5;241m1[39m, [38;5;241m2[39m}:
-[0;32m    318[0m     [38;5;28;01mraise[39;00m [38;5;167;01mValueError[39;00m(
-[0;32m    319[0m         [38;5;124mf[39m[38;5;124m"[39m[38;5;124mIPython won[39m[38;5;124m'[39m[38;5;124mt let you open fd=[39m[38;5;132;01m{[39;00mfile[38;5;132;01m}[39;00m[38;5;124m by default [39m[38;5;124m"[39m
-[0;32m    320[0m         [38;5;124m"[39m[38;5;124mas it is likely to crash IPython. If you know what you are doing, [39m[38;5;124m"[39m
-[0;32m    321[0m         [38;5;124m"[39m[38;5;124myou can use builtins[39m[38;5;124m'[39m[38;5;124m open.[39m[38;5;124m"[39m
-[0;32m    322[0m     )
-[1;32m--> 324[0m [38;5;28;01mreturn[39;00m [43mio_open[49m[43m([49m[43mfile[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[43margs[49m[43m,[49m[43m [49m[38;5;241;43m*[39;49m[38;5;241;43m*[39;49m[43mkwargs[49m[43m)[49m
-
-[1;31mFileNotFoundError[0m: [Errno 2] No such file or directory: 'agp2009a-simplerand/randsimple-20-1.pol'
+[1;31mModuleNotFoundError[0m: No module named 'matplotlib'
 
